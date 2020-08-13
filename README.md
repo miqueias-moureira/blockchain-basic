@@ -1,4 +1,4 @@
-# blockchain-basic
+# blockchain-basico
 Desenvolvimento, em Python 3, de um blockchain genérico que implementa a criação, validação e mineração dos blocos.
 
 ## Rotas
