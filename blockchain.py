@@ -12,8 +12,8 @@ from bottle import route, run
 
 class Blockchain :
     
-    def __init__( self ) :
-        self.chain = []
+    def __init__( self ) : 
+        self.chain = [] # rede blockchain
         self.create_block( proof = 1, previous_hash = '0' )
         
     def create_block( self, proof, previous_hash ) :
@@ -22,25 +22,25 @@ class Blockchain :
                 'timestamp' : str( datetime.datetime.now() ),
                 'proof' : proof,
                 'previous_hash' : previous_hash
-            }
-        self.chain.append( block )
+            } # cria um bloco, com index incremental, timestamp de criação, prova de trabalho e o último hash ( link entre blocos )
+        self.chain.append( block ) # adiciona na rede 
         return block
     
     def get_block_previous( self ) :
-        return self.chain[ -1 ]
+        return self.chain[ -1 ] # retorna o último bloco da rede
     
     def proof_of_work( self, previous_proof ) :
-        proof_new = 1
+        proof_new = 1 
         while True :
-            hash_operation = hashlib.sha256( str( ( proof_new ** 2 ) - ( previous_proof ** 2 ) ).encode() ).hexdigest()
-            if hash_operation[ : 4 ] == '0000' :
+            hash_operation = hashlib.sha256( str( ( proof_new ** 2 ) - ( previous_proof ** 2 ) ).encode() ).hexdigest() # gera um "token" aleatório
+            if hash_operation[ : 4 ] == '0000' : # valida se os quatros últimos digitos do token terminam em zeros
                 break
             else :
                 proof_new += 1 
         return proof_new
                 
     def hash( self, block ) :
-        encode_block = json.dumps( block, sort_keys = True ).encode()
+        encode_block = json.dumps( block, sort_keys = True ).encode() # gera hash do último bloco
         return hashlib.sha256( encode_block ).hexdigest()
     
     def is_chain_valid( self ) :
